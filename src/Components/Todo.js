@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import toast  from 'react-hot-toast';
 
 const Todo = ({id,todos,setTodos, todo}) => {
 
@@ -65,7 +66,18 @@ const Todo = ({id,todos,setTodos, todo}) => {
         return (
             <div className='todo-li'>
                 <li className='li-list' >
-                    <input className="li-input" value={inputedit} onChange={onChangedsave}/>
+                    <input 
+                    className="li-input" 
+                    value={inputedit}
+                    onChange={(e) => {
+                        const value = e.target.value;
+                        if (/^[a-zA-Z]*$/.test(value)) {
+                          onChangedsave(e);
+                        } else {
+                          toast.error("Only letters are allowed.");
+                        }
+                      }}
+                     />
                     <button className='button-save' onClick={()=>onSave(id)}>
                         <span className='text-save'>Save</span><i className='fa fa-save'></i>
                     </button>
